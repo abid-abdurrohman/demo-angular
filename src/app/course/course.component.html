@@ -1,0 +1,85 @@
+<h2>{{ getTitle() }}</h2>
+<div *ngIf="listCourses.length > 0; then courseList else noCourse"></div>
+<ng-template #courseList>
+	<input [(ngModel)]="inputList" (keyup.enter)="addList(inputList)">
+	<button (click)="addList(inputList)">Add List</button>
+	<ul>
+		<li *ngFor="let course of listCourses; index as i; odd as hasOdd; even as hasEven; first as hasFirst; last as hasLast">
+			{{ course.id }}. {{ course.name }}
+			<span *ngIf="hasOdd">(Odd)</span>
+			<span *ngIf="hasEven">(Even)</span>
+			<span *ngIf="hasFirst">(First)</span>
+			<span *ngIf="hasLast">(Last)</span>
+			<button (click)="DeleteList(course)">Delete</button>
+			<button (click)="UpdateList(course)">Update</button>
+		</li>
+	</ul>
+</ng-template>
+<ng-template #noCourse>
+	There is no course
+</ng-template>
+
+<div [hidden]="listCourses.length == 0">
+	This is list courses
+</div>
+<div [hidden]="listCourses.length > 0">
+	There is no courses
+</div>
+
+<ng-template [ngIf]="!(listCourses.length > 0)">
+	This is list courses
+</ng-template>
+<ng-template [ngIf]="listCourses.length > 0">
+	There is no courses
+</ng-template>
+
+<p>
+  course works!
+</p>
+<img src="{{ imageUrl }}" style="width: 100px">
+<img [src]="imageUrl2" style="width: 100px">
+<table>
+	<tr>
+		<td [attr.colspan]="colSpan"></td>
+	</tr>
+</table>
+<div (click)="onDivClick()">
+	<button [class]="isActive ? 'btn btn-primary' : 'btn btn-danger'" [class.active]="isActive" (click)="onClick($event)">Button</button>
+</div>
+
+<input [(ngModel)]="email" type="text" (keyup.enter)="onKeyUp()">
+
+<ul>
+	<li>{{ course.title | uppercase | lowercase }}</li>
+	<li>{{ course.rating | number:'1.1-1' }}</li>
+	<li>{{ course.students | number }}</li>
+	<li>{{ course.price | currency:'RP':true:'3.2-2' }}</li>
+	<li>{{ course.releaseDate | date:'shortDate' }}</li>
+</ul>
+
+<p>{{ textSentences | summary:10 }}</p>
+
+<h2>Switch Case</h2>
+<ul class="nav nav-pills">
+	<li [class.active]="viewMode == 'map'"><a (click)="viewMode = 'map'">Map View</a></li>
+	<li [class.active]="viewMode == 'list'"><a (click)="viewMode = 'list'">List View</a></li>
+</ul>
+<div [ngSwitch]="viewMode">
+	<div *ngSwitchCase="'map'">Map View Content</div>
+	<div *ngSwitchCase="'list'">List View Content</div>
+	<div *ngSwitchDefault>Otherwise</div>
+</div>
+
+<h2>NgStyle</h2>
+<button
+	[style.backgroundColor]="canSave ? 'blue' : 'gray'"
+	[style.color]="canSave ? 'white' : 'black'"
+	[style.fontWeight]="canSave ? 'bold' : 'normal'"
+	[ngStyle]="{
+		'backgroundColor' : canSave ? 'blue' : 'gray',
+		'color' : canSave ? 'white' : 'black'
+	}"
+	(click)="onClickStyle()"
+>
+	Save
+</button>
